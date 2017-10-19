@@ -1,0 +1,16 @@
+# https://git-scm.com/docs/gitignore
+# https://help.github.com/articles/ignoring-files
+# Example .gitignore files: https://github.com/github/gitignore
+/bower_components/
+/node_modules/
+**/target/
+.aws
+*.iml
+.idea
+.settings
+*.project
+*.classpath
+**/.sonar/
+**/node_modules/
+**/typings/
+*.orig
