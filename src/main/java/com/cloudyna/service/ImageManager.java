@@ -22,10 +22,12 @@ public class ImageManager {
 
     private final AmazonEC2 ec2;
     private List<Image> images;
+    private Logger logger;
 
     
-    public ImageManager(final AmazonEC2 ec2) {
-        this.ec2 = ec2;        
+    public ImageManager(final AmazonEC2 ec2, Logger logger) {
+        this.ec2 = ec2;
+        this.logger = logger;
     }    
     
     public void createImage(Instance instance) {
@@ -53,7 +55,7 @@ public class ImageManager {
     }
     
     private void createNewImage(String instanceId) {
-        System.out.println(" > creating new image");
+        logger.log(" > creating new image");
         
         AppContext ctx = AppContext.INSTANCE;
         
@@ -63,13 +65,13 @@ public class ImageManager {
                 .withNoReboot(true);
         CreateImageResult response = ec2.createImage(request);
         String imageId = response.getImageId();
-        System.out.println(" > image created: " + imageId);
+        logger.log(" > image created: " + imageId);
 
         CreateTagsRequest tagRequest = new CreateTagsRequest()
                 .withResources(imageId)
                 .withTags(new Tag(ctx.getTagKey(), ctx.getTagValue()));
         ec2.createTags(tagRequest);
-        System.out.println(" > image has beed tagged");
+        logger.log(" > image has beed tagged");
     }
     
     private void deleteImage(Image image) {
@@ -79,12 +81,12 @@ public class ImageManager {
             .collect(Collectors.toList());
         
         // unregister image
-        System.out.println(" > unregistering an old image: " + image.getImageId());
+        logger.log(" > unregistering an old image: " + image.getImageId());
         ec2.deregisterImage(new DeregisterImageRequest().withImageId(image.getImageId()));
         
         // delete snapshot
         snapshotIds.forEach( id -> {
-            System.out.println(" > removing snapshot for removed image : " + id);
+            logger.log(" > removing snapshot for removed image : " + id);
             DeleteSnapshotRequest delSnapshotRequest = new DeleteSnapshotRequest()
                     .withSnapshotId(id);
             ec2.deleteSnapshot(delSnapshotRequest);
