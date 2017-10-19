@@ -33,8 +33,6 @@ public class ImageBackupApp {
         Logger logger = new Logger(context);
 
         try {
-
-
             AppContext ctx = AppContext.INSTANCE;
 
             try {
