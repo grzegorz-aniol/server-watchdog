@@ -41,7 +41,11 @@ _Only first instance with tag=$WATCH_TAGKEY and value=$WATCH_TAGVALUE will be co
 
 # S3 File modification checker
 
-Applications check existence of file in S3 bucket. If the file doesn't exist or the file is older than expected age then altert it sent.  
+Applications check existence of file in S3 bucket and sends an SNS alter in following scenarios:
+* the file doesn't exist
+* file has 0 bytes
+* file is older than expected
+
 ## Variables applicable for S3 File Checker
 * WATCH_SNSTOPIC   // REQUIRED (arn for the topic)
 * WATCH_BUCKETNAME - bucket name
