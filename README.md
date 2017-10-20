@@ -28,6 +28,9 @@ _Only first instance with tag=$WATCH_TAGKEY and value=$WATCH_TAGVALUE will be co
 
 # Health checker
 
+The application performs HTTP health check against public IP of EC2 machine that is indicated by provided tag:key.
+If machine is not responding then SNS alter is sent. 
+
 ## Run as standalone application
 `java -cp <jarfile> com.cloudyna.HealthCheckApp`
 
@@ -36,6 +39,9 @@ _Only first instance with tag=$WATCH_TAGKEY and value=$WATCH_TAGVALUE will be co
 
 # Image backup
 
+Application creates an AMI images for EC2 machine that is marked with specific tag:key. 
+If the number of images exceeds the limit then old images are removed. 
+
 ## Run as standalone application
 `java -cp <jarfile> com.cloudyna.ImageBackupApp`
 
@@ -43,6 +49,8 @@ _Only first instance with tag=$WATCH_TAGKEY and value=$WATCH_TAGVALUE will be co
 `com.cloudyna.ImageBackupApp::handler`
 
 # S3 File modification checker
+
+Applications check existence of file in S3 bucket. If the file doesn't exist or the file is older than expected age then altert it sent.  
 
 ## Run as standalone application
 `java -cp <jarfile> com.cloudyna.S3FileCheckApp`
