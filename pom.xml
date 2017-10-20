@@ -4,7 +4,7 @@
 	<groupId>com.cloudyna</groupId>
 	<artifactId>server-watchdog</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.0</version>
 	<name>server-watchdog</name>
 	<properties>
 		<java.version>1.8</java.version>
